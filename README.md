@@ -41,11 +41,4 @@ Here are the specific physical components I am using to build this device:
 
 ---
 
-## 📂 Project Structure
 
-```text
-├── main.py              # Main execution loop handling sensor inputs and display updates
-├── coordinates.py       # Core tracking algorithms (RA, Dec, Julian dates, Vernal Equinox math)
-├── sensors.py           # GPS and digital compass data parsing scripts
-├── display.py           # OLED rendering functions
-└── README.md            # Project documentation
