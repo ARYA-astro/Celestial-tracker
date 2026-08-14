@@ -12,10 +12,14 @@ selected_option = 0
 
 def draw_menu():
     with canvas(device) as draw:
+        draw.rectangle((0, 0, 128, 64), outline="white", fill="black")  # Clear the screen
+        draw.text((5, 3), "Main Menu", fill="white", font=proportional(CP437_FONT))
         for index, option in enumerate(main_menu):
+            y_position = 7 + (index) * 12 
+            rectangle_coords = (0, y_position - 2, 128, y_position + 12)
             if index == selected_option:
-                draw.rectangle((0, index * 12, 128, (index + 1) * 12), outline="white", fill="white")
-                draw.text((5, index * 12), option, fill="black", font=proportional(CP437_FONT))
+                draw.rectangle(rectangle_coords, outline="white", fill="white")
+                draw.text((5, y_position), option, fill="black", font=proportional(CP437_FONT))
             else:
                 draw.text((5, index * 12), option, fill="white", font=proportional(CP437_FONT))
 
