@@ -21,7 +21,7 @@ def draw_menu():
                 draw.rectangle(rectangle_coords, outline="white", fill="white")
                 draw.text((5, y_position), option, fill="black", font=proportional(CP437_FONT))
             else:
-                draw.text((5, index * 12), option, fill="white", font=proportional(CP437_FONT))
+                draw.text((5, y_position), option, fill="white", font=proportional(CP437_FONT))
 
 Actions = {"UP", "DOWN", "SELECT", "EXIT"}
 draw_menu()
