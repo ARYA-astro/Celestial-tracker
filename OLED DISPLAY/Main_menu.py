@@ -50,12 +50,12 @@ while True:
         if sel_idx > 0:
             sel_idx -= 1
         elif sel_idx == 0:
-            sel_idx = len(sel_opt) - 1
+            sel_idx = len(main_menu[sel_opt]) - 1
 
     elif Action == "DOWN":
-        if sel_idx < len(sel_opt) - 1:
+        if sel_idx < len(main_menu[sel_opt]) - 1:
             sel_idx += 1
-        elif sel_idx == len(sel_opt) - 1:
+        elif sel_idx == len(main_menu[sel_opt]) - 1:
             sel_idx = 0
 
     elif Action == "SELECT":
