@@ -7,18 +7,28 @@ import time
 serial = i2c(port=1, address=0x3C)
 device = ssd1306(serial, width=128, height=64)
 
-main_menu = ["1.Track", "2.Settings", "3.Telemetry", "4.Align", "5. Exit"]
-selected_option = 0
+main_menu = {
+    "Menu": ["1.Track", "2.Settings", "3.Telemetry", "4.Align", "5. Exit"],
+    "1.Track": ["1.Start", "2.Stop", "3.Back"],
+    "2.Settings": ["1.Display", "2.Sound", "3.Back"],
+    "3.Telemetry": ["1.View Data", "2.Export Data", "3.Back"],
+    "4.Align": ["1.Calibrate", "2.Back"],
+    "5. Exit": ["1.Confirm", "2.Back"]
+    
+}
+
+sel_idx = 0
+sel_opt = "Menu"
 
 def draw_menu():
     with canvas(device) as draw:
         draw.rectangle((0, 0, 128, 64), outline="white", fill="black")  # Clear the screen
         draw.text((5, 3), "Main Menu", fill="white", font=proportional(CP437_FONT))
-        for index, option in enumerate(main_menu):
+        for index, option in enumerate(main_menu[sel_opt]):
             y_position = 7 + (index) * 12 
             rectangle_coords = (0, y_position - 2, 128, y_position + 12)
-            if index == selected_option:
-                draw.rectangle(rectangle_coords, outline="white", fill="white")
+            if index == sel_idx:
+                draw.rectangle(rectangle_coords, outline="white")
                 draw.text((5, y_position), option, fill="black", font=proportional(CP437_FONT))
             else:
                 draw.text((5, y_position), option, fill="white", font=proportional(CP437_FONT))
@@ -35,20 +45,37 @@ while True:
         continue
 
     elif Action == "UP":
-        if selected_option > 0:
-            selected_option -= 1
-        elif selected_option == 0:
-            selected_option = len(main_menu) - 1
+        if sel_idx > 0:
+            sel_idx -= 1
+        elif sel_idx == 0:
+            sel_idx = len(sel_opt) - 1
 
     elif Action == "DOWN":
-        if selected_option < len(main_menu) - 1:
-            selected_option += 1
-        elif selected_option == len(main_menu) - 1:
-            selected_option = 0    
+        if sel_idx < len(sel_opt) - 1:
+            sel_idx += 1
+        elif sel_idx == len(sel_opt) - 1:
+            sel_idx = 0
 
     elif Action == "SELECT":
-        print(f"You selected: {main_menu[selected_option]}")
-        time.sleep(1)  # Pause for a moment to show the selection
+    
+        if sel_opt in main_menu:
+            if sel_opt == "5. Exit":
+                print("Exiting the menu.")
+                break
+
+            else:
+                sel_opt = main_menu[sel_opt][sel_idx]
+                sel_idx = 0
+
+        elif sel_opt not in main_menu:
+            if "Back" in sel_opt:
+                sel_opt = main_menu["Menu"]
+                sel_idx = 0
+            else:
+                print(f"You selected: {sel_opt}")
+                time.sleep(1)  # Pause to show the selection
+                sel_opt = main_menu["Menu"]
+                sel_idx = 0       
 
     elif Action == "EXIT":
         print("Exiting the menu.")
