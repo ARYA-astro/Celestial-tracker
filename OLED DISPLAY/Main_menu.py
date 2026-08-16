@@ -1,9 +1,11 @@
+from PIL import ImageFont
 from luma.core.interface.serial import i2c
 from luma.core.render import canvas
 from luma.oled.device import ssd1306
 from luma.core.legacy.font import proportional, CP437_FONT, LCD_FONT
 import time
 
+FONT = ImageFont.load_default()
 serial = i2c(port=1, address=0x3C)
 device = ssd1306(serial, width=128, height=64)
 
@@ -20,21 +22,21 @@ main_menu = {
 sel_idx = 0
 sel_opt = "Menu"
 
-def draw_menu():
+def draw_menu(title):
     with canvas(device) as draw:
         draw.rectangle((0, 0, 128, 64), outline="white", fill="black")  # Clear the screen
-        draw.text((5, 3), "Main Menu", fill="white", font=proportional(CP437_FONT))
+        draw.text((60, 3), title, fill="white", font=FONT)
         for index, option in enumerate(main_menu[sel_opt]):
-            y_position = 7 + (index) * 12 
+            y_position = 10 + (index) * 12 
             rectangle_coords = (0, y_position - 2, 128, y_position + 12)
             if index == sel_idx:
                 draw.rectangle(rectangle_coords, outline="white")
-                draw.text((5, y_position), option, fill="black", font=proportional(CP437_FONT))
+                draw.text((5, y_position), option, fill="black", font=FONT)
             else:
-                draw.text((5, y_position), option, fill="white", font=proportional(CP437_FONT))
+                draw.text((5, y_position), option, fill="white", font=FONT)
 
 Actions = {"UP", "DOWN", "SELECT", "EXIT"}
-draw_menu()
+draw_menu(sel_opt)
 time.sleep(1)  # Pause for a moment to show the initial menu
 
 while True:
@@ -81,4 +83,4 @@ while True:
         print("Exiting the menu.")
         break  
 
-    draw_menu()                  
+    draw_menu(sel_opt)                  
