@@ -24,7 +24,7 @@ sel_opt = "Menu"
 
 def draw_menu(title):
     with canvas(device) as draw:
-        draw.rectangle((0, 0, 128, 64), outline="white", fill="black")  # Clear the screen
+        draw.rectangle((0, 0, 127, 63), outline="white", fill="black")  # Clear the screen
         draw.text((60, 3), title, fill="white", font=FONT)
         for index, option in enumerate(main_menu[sel_opt]):
             y_position = 14 + index * 12
