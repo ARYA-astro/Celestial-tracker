@@ -27,8 +27,8 @@ def draw_menu(title):
         draw.rectangle((0, 0, 128, 64), outline="white", fill="black")  # Clear the screen
         draw.text((60, 3), title, fill="white", font=FONT)
         for index, option in enumerate(main_menu[sel_opt]):
-            y_position = 10 + (index) * 12 
-            rectangle_coords = (0, y_position - 3, 128, y_position + 10)
+            y_position = 15 + (index) * 12 
+            rectangle_coords = (1, y_position - 1, 127, y_position + 11)
             if index == sel_idx:
                 draw.rectangle(rectangle_coords, outline="black", fill="white")
                 draw.text((5, y_position), option, fill="black", font=FONT)
