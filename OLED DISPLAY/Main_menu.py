@@ -27,8 +27,8 @@ def draw_menu(title):
         draw.rectangle((0, 0, 128, 64), outline="white", fill="black")  # Clear the screen
         draw.text((60, 3), title, fill="white", font=FONT)
         for index, option in enumerate(main_menu[sel_opt]):
-            y_position = 15 + (index) * 12 
-            rectangle_coords = (1, y_position - 1, 127, y_position + 11)
+            y_position = 14 + index * 12
+            rectangle_coords = (1, y_position, 127, y_position + 11)
             if index == sel_idx:
                 draw.rectangle(rectangle_coords, outline="black", fill="white")
                 draw.text((5, y_position), option, fill="black", font=FONT)
@@ -60,27 +60,27 @@ while True:
 
     elif Action == "SELECT":
     
-        if sel_opt in main_menu:
-            if sel_opt == "5. Exit":
-                print("Exiting the menu.")
-                break
+        selected_option = main_menu[sel_opt][sel_idx] 
+        if "Exit" in selected_option:
+            print("Exiting the menu.")
+            break
 
-            else:
-                sel_opt = main_menu[sel_opt][sel_idx]
-                sel_idx = 0
-
-        elif sel_opt not in main_menu:
-            if "Back" in sel_opt:
-                sel_opt = main_menu["Menu"]
+        elif selected_option not in main_menu:
+            if "Back" in selected_option:
+                sel_opt = "Menu"
                 sel_idx = 0
             else:
-                print(f"You selected: {sel_opt}")
-                time.sleep(1)  # Pause to show the selection
-                sel_opt = main_menu["Menu"]
-                sel_idx = 0       
+                print(f"Selected option: {selected_option}")
+                time.sleep(1)  # Pause to show the selected option
+
+        elif selected_option in main_menu:
+            sel_opt = selected_option
+            sel_idx = 0        
+
 
     elif Action == "EXIT":
         print("Exiting the menu.")
-        break  
+        break
+         
 
     draw_menu(sel_opt)                  
